@@ -3,11 +3,6 @@
 import requests
 import pandas as pd
 
-# Configure API request
-# Note limit parameter is arbitrary value greater than total number of NPS sites
-
-my_key = "xawvi79QXSObt8OZUcDBUHPcXLJidAqJAdto1lDY"
-
 pd.options.display.max_columns = 100
 
 def get_park_list(key):
@@ -28,6 +23,7 @@ def get_park_list(key):
     data = pd.DataFrame.from_dict(r.json())
     return data
 
+my_key = input("Enter your NPS API key")
 df = get_park_list(my_key)
 
 column_names = ['id', 'park_code', 'name', 'full_name', 'designation', 'description',

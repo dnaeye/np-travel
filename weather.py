@@ -7,7 +7,7 @@ import sys
 
 pd.set_option('display.max_columns', None)
 
-mytoken = 'xelrinjiSrsFXDJpIQIBjWlHihlOXbGO'
+mytoken = input('Enter your NOAA API token: ')
 
 base_url_data = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/data'
 base_url_stations = 'https://www.ncdc.noaa.gov/cdo-web/api/v2/stations'

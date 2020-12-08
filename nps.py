@@ -23,7 +23,7 @@ def get_park_list(key):
     data = pd.DataFrame.from_dict(r.json())
     return data
 
-my_key = input("Enter your NPS API key")
+my_key = input("Enter your NPS API key: ")
 df = get_park_list(my_key)
 
 column_names = ['id', 'park_code', 'name', 'full_name', 'designation', 'description',
@@ -74,4 +74,13 @@ for park in df['data']:
     parks_series = pd.Series(parks_data, index=column_names)
     parks_df = parks_df.append(parks_series, ignore_index=True)
 
-parks_df.to_csv('parks_data.csv', index=False, encoding='utf-8-sig')
+# Found a few unicode decimal codes that were broken in raw data (https://www.codetable.net/decimal/):
+# &#257 = ā
+# &#241 = ñ
+# &#333 = ō
+
+parks_df = parks_df.replace({"&#257": "ā", "&#241": "ñ", "&#333": "ō"}, regex=True)
+parks_df['name'] = parks_df['name'].replace(";","", regex=True)
+parks_df['full_name'] = parks_df['full_name'].replace(";","", regex=True)
+
+parks_df.to_csv('data/parks_data.csv', index=False, encoding='utf-8-sig')
